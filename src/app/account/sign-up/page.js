@@ -1,5 +1,3 @@
-"use client";
-
 import AuthForms from "@/components/templates/AuthForms";
 
 export default function SignUpPage() {

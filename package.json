@@ -25,5 +25,8 @@
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6"
   }
 }
