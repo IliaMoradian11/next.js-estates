@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "پروژه املاک | برای استفاده از امکانات سایت ثبت نام کنید",
+  title: "پروژه املاک | وارد حساب کاربری خود شوید",
 };
 
 export default function RootLayout({ children }) {
