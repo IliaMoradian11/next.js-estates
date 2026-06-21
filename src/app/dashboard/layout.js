@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
+import connectDB from "@/utils/connectDB";
+import User from "@/models/User";
 import { notFound, redirect } from "next/navigation";
 
-import User from "@/models/User";
-import DashboardPage from "@/components/templates/DashboardPage";
-import connectDB from "@/utils/connectDB";
+import DashboardLayoutComponent from "@/components/layout/DashboardLayout";
 
-export default async function Dashboard() {
+export default async function DashboardLayout({ children }) {
   const data = await getServerSession();
 
   if (data?.status === "unauthenticated" || !data) {
@@ -23,8 +23,7 @@ export default async function Dashboard() {
     }
 
     const user = await User.findOne({ email: data.user.email });
-
-    return <DashboardPage createdAt={user.createdAt} />;
+    return <DashboardLayoutComponent children={children} email={user.email} />;
   } catch (err) {
     notFound();
   }
