@@ -1,5 +1,7 @@
 :root {
   --color-blue: #304ffe;
+  --color-light-blue: #304ffe18;
+  --color-red: #db0505;
   --box-shadow: #304ffe4a 0px 4px 15px;
 }
 

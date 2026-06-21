@@ -9,7 +9,7 @@
   padding: 15px 20px;
   border-radius: 10px;
   box-shadow: var(--box-shadow);
-  height: 61px;
+  height: 65px;
 }
 
 .header button:disabled {
@@ -20,7 +20,7 @@
   border: none;
   border-radius: 5px;
   cursor: not-allowed;
-  height: 31px;
+  height: 35px;
 }
 
 .header div {
@@ -29,16 +29,18 @@
 }
 
 .header div a {
-  margin-left: 15px;
+  margin-left: 25px;
   display: inline-block;
   font-size: 1.1rem;
 }
 
 .header > a {
   background-color: white;
+  min-width: 50px;
   color: var(--color-blue);
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 3px 6px;
   border-radius: 5px;
 }
@@ -48,7 +50,7 @@
 }
 
 .content {
-  min-height: calc(100vh - 260px);
+  min-height: calc(100vh - 220px);
 }
 
 .footer {

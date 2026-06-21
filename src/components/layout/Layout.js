@@ -24,7 +24,7 @@ function Layout({ children }) {
         )}
         {data.status === "authenticated" && (
           <Link href="/dashboard">
-            <FaUserAlt />
+            <FaUserAlt size="20px" />
           </Link>
         )}
         {data.status === "unauthenticated" && (
