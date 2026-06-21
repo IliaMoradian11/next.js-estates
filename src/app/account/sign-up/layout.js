@@ -1,7 +1,0 @@
-export const metadata = {
-  title: "پروژه املاک | برای استفاده از امکانات سایت ثبت نام کنید",
-};
-
-export default function RootLayout({ children }) {
-  return <main>{children}</main>;
-}

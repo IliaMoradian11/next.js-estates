@@ -1,6 +1,6 @@
 :root {
   --color-blue: #304ffe;
-  --form-box-shadow: #304ffe4a 0px 4px 15px;
+  --box-shadow: #304ffe4a 0px 4px 15px;
 }
 
 * {

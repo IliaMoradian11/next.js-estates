@@ -15,9 +15,9 @@ const handler = NextAuth({
           throw new Error("مشکلی پیش آمد، لطفا مجددا امتحان کنید");
         }
 
-        const isConnected = await connectDB()
+        const isConnected = await connectDB();
         if (!isConnected) {
-          throw new Error("مشکلی در سرور پیش آمد")
+          throw new Error("مشکلی در سرور پیش آمد");
         }
 
         const user = await User.findOne({ email });
@@ -34,6 +34,7 @@ const handler = NextAuth({
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };

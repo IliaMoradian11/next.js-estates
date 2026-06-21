@@ -1,6 +1,8 @@
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
+import NextAuthProvider from "@/components/providers/NextAuthProvider";
+import Layout from "@/components/layout/Layout";
 import { yekan } from "@/utils/fonts";
 
 export const metadata = {
@@ -12,7 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl">
       <body className={yekan.className}>
-        {children}
+        <NextAuthProvider>
+          <Layout>{children}</Layout>
+        </NextAuthProvider>
         <Toaster />
       </body>
     </html>
