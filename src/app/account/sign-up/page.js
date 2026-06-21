@@ -1,12 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 
 import AuthForms from "@/components/templates/AuthForms";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "", repeat: "" });
+  const [isFetching, setIsFetching] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -23,20 +27,35 @@ export default function SignUpPage() {
       return;
     }
 
+    setIsFetching(true);
+    const loadingToastId = toast.loading("در حال ارسال اطلاعات...");
+
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         body: JSON.stringify({ email: form.email, password: form.password }),
         headers: { "Content-Type": "application/json" },
       });
+      setIsFetching(false);
       const json = await res.json();
       if (json.ok) {
-        toast.success(json.message);
+        toast.success(json.message, { id: loadingToastId });
+        const response = await signIn("credentials", {
+          email: form.email,
+          password: form.password,
+          redirect: false,
+        });
+        if (response.ok) {
+          router.replace("/dashboard");
+        } else {
+          router.push("/account/sign-in");
+        }
       } else {
-        toast.error(json.error);
+        toast.error(json.error, { id: loadingToastId });
       }
     } catch (err) {
-      toast.error("مشکلی در ارتباط با سرور پیش آمد");
+      toast.error("مشکلی در ارتباط با سرور پیش آمد", { id: loadingToastId });
+      setIsFetching(false);
     }
   };
 
@@ -44,12 +63,14 @@ export default function SignUpPage() {
     <AuthForms
       h2Text="فرم ثبت نام"
       linkText="ورود"
+      linkHref="sign-in"
       needRepeat={true}
       pText="حساب کاربری دارید؟"
       submitButtonText="ثبت نام"
       submitHandler={submitHandler}
       form={form}
       setForm={setForm}
+      isFetching={isFetching}
     />
   );
 }

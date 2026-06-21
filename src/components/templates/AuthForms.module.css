@@ -58,6 +58,12 @@
   transform: scale(1.1);
 }
 
+.container button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
 .container p {
   color: grey;
   font-size: 1.1rem;

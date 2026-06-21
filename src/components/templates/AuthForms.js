@@ -9,10 +9,12 @@ function AuthForms({
   needRepeat,
   submitButtonText,
   linkText,
+  linkHref,
   pText,
   form,
   submitHandler,
-  setForm
+  setForm,
+  isFetching
 }) {
   const changeHandler = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -50,10 +52,10 @@ function AuthForms({
             />
           </>
         )}
-        <button type="submit">{submitButtonText}</button>
+        <button type="submit" disabled={isFetching}>{submitButtonText}</button>
       </form>
       <p>
-        {pText} <Link href="/account/sign-in">{linkText}</Link>
+        {pText} <Link href={`/account/${linkHref}`}>{linkText}</Link>
       </p>
     </div>
   );
