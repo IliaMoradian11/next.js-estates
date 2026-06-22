@@ -8,12 +8,12 @@
   border-radius: 10px;
 }
 
-.container > div {
+.container form {
   display: flex;
   flex-direction: column;
 }
 
-.container > div > button {
+.container form > button {
   border: none;
   background-color: var(--color-blue);
   color: white;
@@ -25,6 +25,12 @@
   transition: all 0.3s;
 }
 
-.container > div > button:hover {
+.container form > button:hover {
   transform: scale(1.03);
+}
+
+.container form > button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+  transform: none !important;
 }

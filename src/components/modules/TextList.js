@@ -4,7 +4,7 @@ import { MdOutlineLibraryAdd } from "react-icons/md";
 import styles from "./TextList.module.css";
 
 function TextList({
-  input: { label, id },
+  input: { label, id, required },
   form,
   removeHandler,
   addHandler,
@@ -12,7 +12,14 @@ function TextList({
 }) {
   return (
     <div className={styles.container}>
-      <label>{label}</label>
+      <label>
+        {label}
+        {required && (
+          <span style={{ marginRight: "3px", color: "var(--color-red)" }}>
+            *
+          </span>
+        )}
+      </label>
       {form[id].map((i, index) => (
         <div key={i.listId}>
           <input
@@ -28,7 +35,7 @@ function TextList({
           </button>
         </div>
       ))}
-      <button onClick={() => addHandler(id)}>
+      <button onClick={() => addHandler(id)} type="button">
         <span>افزودن</span>
         <MdOutlineLibraryAdd />
       </button>

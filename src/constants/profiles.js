@@ -1,19 +1,26 @@
 export const forms = [
-  { label: "عنوان آگهی", type: "text", id: "title" },
-  { label: "توضیحات", type: "textarea", id: "descriptions" },
-  { label: "آدرس", type: "text", id: "location" },
-  { label: "شماره تماس", type: "number", id: "phone" },
-  { label: "قیمت (تومان)", type: "number", id: "price" },
-  { label: "بنگاه", type: "text", id: "realState" },
+  { label: "عنوان آگهی", type: "text", id: "title", required: true },
+  { label: "توضیحات", type: "textarea", id: "descriptions", required: true },
+  { label: "آدرس", type: "text", id: "location", required: true },
+  { label: "شماره تماس", type: "number", id: "phone", required: true },
+  { label: "قیمت (تومان)", type: "number", id: "price", required: true },
+  { label: "بنگاه", type: "text", id: "realState", required: true },
   {
     label: "دسته بندی",
     type: "radio",
-    values: ["ویلا", "آپارتمان", "مغازه", "دفتر"],
+    values: ["villa", "apartment", "store", "office"],
+    valuesText: ["ویلا", "آپارتمان", "مغازه", "دفتر"],
     id: "category",
+    required: true,
   },
-  { label: "امکانات رفاهی", type: "text-list", id: "amenities" },
-  { label: "قوانین", type: "text-list", id: "rules" },
-  { label: "تاریخ ساخت", type: "date", id: "date" },
+  {
+    label: "امکانات رفاهی",
+    type: "text-list",
+    id: "amenities",
+    required: false,
+  },
+  { label: "قوانین", type: "text-list", id: "rules", required: false },
+  { label: "تاریخ ساخت", type: "date", id: "constructionDate", required: true },
 ];
 
 export const initialState = {
@@ -24,7 +31,7 @@ export const initialState = {
   price: "",
   realState: "",
   category: "",
-  date: new Date(),
+  constructionDate: new Date(),
   amenities: [],
   rules: [],
 };

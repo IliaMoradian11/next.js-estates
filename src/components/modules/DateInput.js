@@ -4,9 +4,17 @@ import opacity from "react-element-popper/animations/opacity";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
-function DateInput({ date, changeHandler }) {
+function DateInput({ input: { required }, date, changeHandler }) {
   return (
     <div>
+      <label style={{display: "block", marginBottom: "5px", fontWeight: "500" }}>
+        تاریخ ساخت
+        {required && (
+          <span style={{ marginRight: "3px", color: "var(--color-red)" }}>
+            *
+          </span>
+        )}
+      </label>
       <DatePicker
         style={{
           border: "2px dashed var(--color-blue)",
