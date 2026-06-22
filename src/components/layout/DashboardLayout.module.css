@@ -53,3 +53,7 @@
 .container .sidebar li button span {
   margin-right: 5px;
 }
+
+.container main {
+  width: calc(100% - 240px);
+}

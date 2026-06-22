@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
@@ -19,7 +19,7 @@ function DashboardLayoutComponent({ children, email }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sidebar}>
+      <aside className={styles.sidebar}>
         <FaRegUserCircle color="#304ffe" size={60} />
         <p>{email}</p>
         <ul>
@@ -39,8 +39,8 @@ function DashboardLayoutComponent({ children, email }) {
             </button>
           </li>
         </ul>
-      </div>
-      {children}
+      </aside>
+      <main>{children}</main>
     </div>
   );
 }
