@@ -24,7 +24,7 @@ export const initialState = {
   price: "",
   realState: "",
   category: "",
-  date: "",
+  date: new Date(),
   amenities: [],
   rules: [],
 };

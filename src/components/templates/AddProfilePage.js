@@ -9,6 +9,7 @@ import TextArea from "../modules/TextArea";
 import RadioInputs from "../modules/RadioInputs";
 import TextList from "../modules/TextList";
 import DefaultInput from "../modules/DefaultInput";
+import DateInput from "../modules/DateInput";
 
 import styles from "./AddProfilePage.module.css";
 
@@ -37,6 +38,10 @@ function AddProfilePage() {
     const newForm = [...form[name]];
     newForm[index].text = e.target.value;
     setForm({ ...form, [name]: newForm });
+  };
+
+  const dateChangeHandler = (value) => {
+    setForm({ ...form, date: value });
   };
 
   return (
@@ -72,6 +77,14 @@ function AddProfilePage() {
                   removeHandler={removeForm}
                   key={input.id}
                   changeHandler={listChangeHandler}
+                />
+              );
+            case "date":
+              return (
+                <DateInput
+                  date={form.date}
+                  changeHandler={dateChangeHandler}
+                  key={v7()}
                 />
               );
             default:
