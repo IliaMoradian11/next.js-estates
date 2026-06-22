@@ -1,8 +1,8 @@
-import { v7 } from "uuid";
+import styles from "./DefaultInput.module.css";
 
 function DefaultInput({ input: { label, id, type } }) {
   return (
-    <div key={v7()}>
+    <div className={styles.container}>
       <label htmlFor={id}>{label}</label>
       <input type={type} id={id} />
     </div>

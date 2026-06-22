@@ -3,6 +3,7 @@
 }
 
 .container .sidebar {
+  height: fit-content;
   width: 200px;
   margin-left: 40px;
   box-shadow: var(--box-shadow);

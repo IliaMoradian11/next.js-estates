@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { v7 } from "uuid";
 
 import { forms, initialState } from "@/constants/profiles";
 
@@ -9,41 +10,83 @@ import RadioInputs from "../modules/RadioInputs";
 import TextList from "../modules/TextList";
 import DefaultInput from "../modules/DefaultInput";
 
+import styles from "./AddProfilePage.module.css";
+
 function AddProfilePage() {
   const [form, setForm] = useState(initialState);
 
   const addForm = (name) => {
-    setForm({ ...form, [name]: [...form[name], ""] });
+    setForm({ ...form, [name]: [...form[name], { text: "", listId: v7() }] });
   };
 
   const removeForm = (name, index) => {
-    const newFormType2 = form[name].filter((i, iIndex) => iIndex !== index);
-    setForm({ ...form, [name]: newFormType2 });
+    const newForm = form[name].filter((i, iIndex) => iIndex !== index);
+    setForm({ ...form, [name]: newForm });
+  };
+
+  const textChangeHandler = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const radioChangeHandler = (e) => {
+    setForm({ ...form, category: e.target.value });
+  };
+
+  const listChangeHandler = (e) => {
+    const { name, index } = e.target.dataset;
+    const newForm = [...form[name]];
+    newForm[index].text = e.target.value;
+    setForm({ ...form, [name]: newForm });
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h6>ثبت آگهی</h6>
-      {forms.map((input) => {
-        switch (input.type) {
-          case "textarea":
-            return <TextArea input={input} />;
-          case "radio":
-            return <RadioInputs input={input} />;
-          case "text-list":
-            return (
-              <TextList
-                input={input}
-                form={form}
-                addHandler={addForm}
-                removeHandler={removeForm}
-              />
-            );
-          default:
-            return <DefaultInput input={input} />;
-        }
-      })}
-      <button>ثبت آگهی</button>
+      <div>
+        {forms.map((input) => {
+          switch (input.type) {
+            case "textarea":
+              return (
+                <TextArea
+                  input={input}
+                  key={input.id}
+                  value={form[input.id]}
+                  changeHandler={textChangeHandler}
+                />
+              );
+            case "radio":
+              return (
+                <RadioInputs
+                  input={input}
+                  key={input.id}
+                  value={form[input.id]}
+                  changeHandler={radioChangeHandler}
+                />
+              );
+            case "text-list":
+              return (
+                <TextList
+                  input={input}
+                  form={form}
+                  addHandler={addForm}
+                  removeHandler={removeForm}
+                  key={input.id}
+                  changeHandler={listChangeHandler}
+                />
+              );
+            default:
+              return (
+                <DefaultInput
+                  input={input}
+                  key={input.id}
+                  value={form[input.id]}
+                  changeHandler={textChangeHandler}
+                />
+              );
+          }
+        })}
+        <button>ثبت آگهی</button>
+      </div>
     </div>
   );
 }

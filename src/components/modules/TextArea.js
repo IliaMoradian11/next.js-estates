@@ -1,10 +1,15 @@
-import { v7 } from "uuid";
+import styles from "./TextArea.module.css";
 
-function TextArea({ input: { id, label } }) {
+function TextArea({ input: { id, label }, value, changeHandler }) {
   return (
-    <div key={v7()}>
+    <div className={styles.container}>
       <label htmlFor={id}>{label}</label>
-      <textarea id={id}></textarea>
+      <textarea
+        id={id}
+        name={id}
+        value={value}
+        onChange={changeHandler}
+      ></textarea>
     </div>
   );
 }

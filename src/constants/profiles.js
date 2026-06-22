@@ -13,7 +13,7 @@ export const forms = [
   },
   { label: "امکانات رفاهی", type: "text-list", id: "amenities" },
   { label: "قوانین", type: "text-list", id: "rules" },
-  { label: "تاریخ ساخت", type: "date" },
+  { label: "تاریخ ساخت", type: "date", id: "date" },
 ];
 
 export const initialState = {
