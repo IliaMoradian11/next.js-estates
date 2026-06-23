@@ -1,0 +1,75 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 2px solid var(--color-blue);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card .icon {
+  background-color: var(--color-icon-background);
+  color: var(--color-blue);
+  font-size: 1.5rem;
+  padding: 5px;
+  border-radius: 3px;
+  height: 34px;
+}
+
+.card h5 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 15px 0 10px;
+}
+
+.card .location {
+  color: grey;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.card .location svg {
+  margin-left: 5px;
+}
+
+.card .price {
+  color: grey;
+  margin: 10px 0 15px;
+  font-weight: 500;
+}
+
+.card .seeProfile {
+  color: var(--color-blue);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.card .button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-red);
+  color: var(--color-red);
+  margin-top: 15px;
+  background: none;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.card .button svg {
+  margin-right: 5px;
+}

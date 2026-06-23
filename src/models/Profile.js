@@ -44,6 +44,10 @@ const profileSchema = new Schema(
       type: Date,
       required: true,
     },
+    isPublished: {
+      type: Boolean,
+      default: false,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",

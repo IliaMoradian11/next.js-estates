@@ -27,10 +27,10 @@ function DashboardLayoutComponent({ children, email }) {
             <Link href="/">حساب کاربری</Link>
           </li>
           <li>
-            <Link href="/">آگهی های من</Link>
+            <Link href="/dashboard/profiles">آگهی های من</Link>
           </li>
           <li>
-            <Link href="/dashboard/add-profile">ثبت آگهی</Link>
+            <Link href="/dashboard/profiles/add">ثبت آگهی</Link>
           </li>
           <li>
             <button onClick={signOutHandler}>
