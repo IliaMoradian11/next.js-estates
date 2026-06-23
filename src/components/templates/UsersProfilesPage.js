@@ -9,10 +9,10 @@ function UsersProfilesPage({ profiles }) {
   return (
     <div className={styles.container}>
       {profiles.map((profile) => (
-        <div className={styles.card}>
+        <div className={styles.card} key={profile._id}>
           <Card profile={profile} />
           <Link
-            href={`/dashboard/${profile._id}`}
+            href={`/dashboard/profiles/${profile._id}`}
             className={styles.button}
             style={{
               borderColor: "var(--color-green)",

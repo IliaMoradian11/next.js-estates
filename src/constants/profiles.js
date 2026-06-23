@@ -35,3 +35,16 @@ export const initialState = {
   amenities: [],
   rules: [],
 };
+
+export const modelProfilelKeys = [
+  "title",
+  "descriptions",
+  "location",
+  "phone",
+  "price",
+  "realState",
+  "category",
+  "amenities",
+  "rules",
+  "constructionDate",
+];

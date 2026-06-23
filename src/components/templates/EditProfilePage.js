@@ -3,18 +3,18 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-import { initialState } from "@/constants/profiles";
-import AddEditProfile from "../modules/AddEditProfile";
+import AddEditProfile from "@/components/modules/AddEditProfile";
 import { checkFormValidation } from "@/utils/checkFormValidation";
 
-function AddProfilePage() {
+function EditProfilePage({ initialState, profileId }) {
   const [form, setForm] = useState(initialState);
   const [isFetching, setIsFetching] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    checkFormValidation(form, toast);
+    const isValid = checkFormValidation(form, toast);
+    if (!isValid) return;
 
     const toastId = toast.loading("در حال ارسال اطلاعات ...");
     setIsFetching(true);
@@ -23,8 +23,8 @@ function AddProfilePage() {
       const newAmenities = form.amenities.filter((i) => i.text);
       const newRules = form.rules.filter((i) => i.text);
 
-      const res = await fetch("/api/profile", {
-        method: "POST",
+      const res = await fetch(`/api/profile/${profileId}`, {
+        method: "PUT",
         body: JSON.stringify({
           ...form,
           amenities: newAmenities,
@@ -36,25 +36,25 @@ function AddProfilePage() {
       setIsFetching(false);
       if (json.ok) {
         toast.success(json.message, { id: toastId });
-        setForm(initialState);
+        setForm(json.data);
       } else {
         toast.error(json.error, { id: toastId });
       }
     } catch (err) {
       setIsFetching(false);
-      toast.error("آگهی ایجاد نشد", { id: toastId });
+      toast.error("آگهی تغییر نکرد", { id: toastId });
     }
   };
 
   return (
     <AddEditProfile
+      headerText="ویرایش آگهی"
       form={form}
-      headerText="ثبت آگهی"
+      setForm={setForm}
       isFetching={isFetching}
       submitHandler={submitHandler}
-      setForm={setForm}
     />
   );
 }
 
-export default AddProfilePage;
+export default EditProfilePage;
