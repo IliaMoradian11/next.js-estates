@@ -14,7 +14,8 @@ function AddProfilePage() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    checkFormValidation(form, toast);
+    const isValid = checkFormValidation(form, toast);
+    if (!isValid) return;
 
     const toastId = toast.loading("در حال ارسال اطلاعات ...");
     setIsFetching(true);

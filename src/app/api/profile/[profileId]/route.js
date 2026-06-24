@@ -46,20 +46,22 @@ export async function PUT(req, { params }) {
     }
 
     if (user._id.toString() !== profile.userId.toString()) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "شما قادر به تغییر این آگهی نیستید",
-        },
-        { status: 403 },
-      );
+      if (user.role !== "ADMIN") {
+        return NextResponse.json(
+          {
+            ok: false,
+            error: "شما قادر به تغییر این آگهی نیستید",
+          },
+          { status: 403 },
+        );
+      }
     }
 
     for (const i of modelProfilelKeys) {
       profile[i] = data[i];
     }
 
-    profile.save();
+    await profile.save();
 
     return NextResponse.json({
       ok: true,
@@ -67,6 +69,132 @@ export async function PUT(req, { params }) {
       data: profile,
     });
   } catch (err) {
+    return NextResponse.json(
+      { ok: false, error: "مشکلی در سرور پیش آمد" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(req, { params }) {
+  const { type } = await req.json();
+
+  if (type !== "publish") {
+    return;
+  }
+
+  try {
+    const isConnected = await connectDB();
+    if (!isConnected) {
+      return NextResponse.json(
+        { ok: false, error: "مشکلی در سرور پیش آمد" },
+        { status: 500 },
+      );
+    }
+
+    const session = await getServerSession();
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
+        { status: 401 },
+      );
+    }
+
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json(
+        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
+        { status: 401 },
+      );
+    }
+    if (user.role !== "ADMIN") {
+      return NextResponse.json(
+        { ok: false, message: "فقط ادمین اجازه تغییر آگهی را دارد" },
+        { status: 403 },
+      );
+    }
+
+    const profile = await Profile.findById(params.profileId);
+    if (!profile) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "هیچ آگهی با این آیدی ثبت نشده است",
+        },
+        { status: 404 },
+      );
+    }
+
+    profile.isPublished = true;
+
+    await profile.save();
+
+    const unPublishedProfiles = await Profile.find({
+      isPublished: false,
+    }).lean();
+
+    return NextResponse.json({
+      ok: true,
+      message: "با موفقیت تغییر کرد",
+      data: unPublishedProfiles,
+    });
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { ok: false, error: "مشکلی در سرور پیش آمد" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(req, { params }) {
+  try {
+    const isConnected = await connectDB();
+    if (!isConnected) {
+      return NextResponse.json(
+        { ok: false, error: "مشکلی در سرور پیش آمد" },
+        { status: 500 },
+      );
+    }
+
+    const session = await getServerSession();
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
+        { status: 401 },
+      );
+    }
+
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json(
+        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
+        { status: 401 },
+      );
+    }
+
+    const profile = await Profile.findById(params.profileId);
+
+    if (user._id.toString() !== profile.userId.toString()) {
+      if (user.role !== "ADMIN") {
+        return NextResponse.json(
+          {
+            ok: false,
+            message: "فقط ادمین یا سازنده آگهی اجازه تغییر آگهی را دارد",
+          },
+          { status: 403 },
+        );
+      }
+    }
+
+    await Profile.findByIdAndDelete(params.profileId);
+
+    return NextResponse.json({
+      ok: true,
+      message: "حذف شد",
+    });
+  } catch (err) {
+    console.log(err);
     return NextResponse.json(
       { ok: false, error: "مشکلی در سرور پیش آمد" },
       { status: 500 },

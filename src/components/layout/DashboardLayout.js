@@ -7,11 +7,11 @@ import toast from "react-hot-toast";
 
 import styles from "./DashboardLayout.module.css";
 
-function DashboardLayoutComponent({ children, email }) {
+function DashboardLayoutComponent({ children, email, role }) {
   const signOutHandler = async () => {
     await signOut({ redirect: false });
     toast.success("با موفقیت از حساب خارج شدید");
-    window.location.replace("/")
+    window.location.replace("/");
   };
 
   return (
@@ -29,6 +29,11 @@ function DashboardLayoutComponent({ children, email }) {
           <li>
             <Link href="/dashboard/profiles/add">ثبت آگهی</Link>
           </li>
+          {role === "ADMIN" && (
+            <li>
+              <Link href="/admin">در انتظار تایید</Link>
+            </li>
+          )}
           <li>
             <button onClick={signOutHandler}>
               <FaSignOutAlt />

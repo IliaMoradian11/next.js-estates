@@ -1,9 +1,10 @@
-import Link from "next/link";
-import { FaEdit, FaTrash } from "react-icons/fa";
+"use client";
 
 import Card from "../modules/Card";
+import DeleteButton from "../modules/DeleteButton";
 
 import styles from "./UsersProfilesPage.module.css";
+import EditButton from "../modules/EditButton";
 
 function UsersProfilesPage({ profiles }) {
   return (
@@ -12,21 +13,8 @@ function UsersProfilesPage({ profiles }) {
         profiles.map((profile) => (
           <div className={styles.card} key={profile._id}>
             <Card profile={profile} />
-            <Link
-              href={`/dashboard/profiles/${profile._id}`}
-              className={styles.button}
-              style={{
-                borderColor: "var(--color-green)",
-                color: "var(--color-green)",
-              }}
-            >
-              ویرایش
-              <FaEdit />
-            </Link>
-            <button className={styles.button}>
-              حذف آگهی
-              <FaTrash />
-            </button>
+            <EditButton profileId={profile._id} />
+            <DeleteButton profileId={profile._id} />
           </div>
         ))
       ) : (

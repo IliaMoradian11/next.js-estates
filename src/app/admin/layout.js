@@ -22,6 +22,9 @@ export default async function DashboardLayout({ children }) {
     if (!user) {
       return redirect("/account/sign-in");
     }
+    if (user.role !== "ADMIN") {
+      return redirect("/dashboard");
+    }
 
     return (
       <DashboardLayoutComponent

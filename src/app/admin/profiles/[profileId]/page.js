@@ -1,0 +1,44 @@
+import { notFound, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import connectDB from "@/utils/connectDB";
+import User from "@/models/User";
+import Profile from "@/models/Profile";
+import { modelProfilelKeys } from "@/constants/profiles";
+
+import EditProfilePage from "@/components/templates/EditProfilePage";
+
+export default async function AdminEditProfile({ params: { profileId } }) {
+  const isConnected = await connectDB();
+  if (!isConnected) {
+    return notFound();
+  }
+
+  try {
+    const data = await getServerSession();
+    if (!data?.user?.email) {
+      return redirect("/account/sign-in");
+    }
+
+    const user = await User.findOne({ email: data.user.email }).lean();
+
+    const profile = await Profile.findById(profileId).lean();
+    if (!profile) {
+      return notFound();
+    }
+
+    const initialState = {};
+    for (const i of modelProfilelKeys) {
+      initialState[i] = profile[i];
+    }
+
+    return (
+      <EditProfilePage
+        initialState={JSON.parse(JSON.stringify(initialState))}
+        profileId={profile._id.toString()}
+      />
+    );
+  } catch (err) {
+    return notFound();
+  }
+}
