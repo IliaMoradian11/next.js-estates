@@ -17,7 +17,7 @@ export default async function EditProfile({ params: { profileId } }) {
   try {
     const data = await getServerSession();
     if (!data?.user?.email) {
-      return notFound();
+      return redirect("/account/sign-in");
     }
 
     const user = await User.findOne({ email: data.user.email }).lean();

@@ -1,7 +1,5 @@
 import AddProfilePage from "@/components/templates/AddProfilePage";
 
-function AddProfile() {
+export default async function AddProfile() {
   return <AddProfilePage />;
 }
-
-export default AddProfile;

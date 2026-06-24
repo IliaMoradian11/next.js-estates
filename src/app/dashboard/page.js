@@ -8,24 +8,23 @@ import connectDB from "@/utils/connectDB";
 export default async function Dashboard() {
   const data = await getServerSession();
 
-  if (data?.status === "unauthenticated" || !data) {
-    redirect("/account/sign-in");
-  }
-
-  if (data?.status === "loading") {
-    return null;
+  if (!data?.user?.email) {
+    return redirect("/account/sign-in");
   }
 
   try {
     const isConnected = await connectDB();
     if (!isConnected) {
-      notFound();
+      return notFound();
     }
 
     const user = await User.findOne({ email: data.user.email });
+    if (!user) {
+      return redirect("/account/sign-in");
+    }
 
     return <DashboardPage createdAt={user.createdAt} />;
   } catch (err) {
-    notFound();
+    return redirect("/account/sign-in");
   }
 }

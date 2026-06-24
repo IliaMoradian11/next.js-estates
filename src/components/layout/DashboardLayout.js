@@ -2,19 +2,16 @@
 
 import Link from "next/link";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 
 import styles from "./DashboardLayout.module.css";
 
 function DashboardLayoutComponent({ children, email }) {
-  const router = useRouter();
-
   const signOutHandler = async () => {
     await signOut({ redirect: false });
     toast.success("با موفقیت از حساب خارج شدید");
-    router.push("/");
+    window.location.replace("/")
   };
 
   return (

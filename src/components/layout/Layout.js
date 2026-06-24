@@ -1,14 +1,31 @@
-"use client";
+import { getServerSession } from "next-auth";
+import connectDB from "@/utils/connectDB";
+import User from "@/models/User";
 
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { FaUserAlt, FaSignInAlt } from "react-icons/fa";
-import { TailSpin } from "react-loader-spinner";
 
 import styles from "./Layout.module.css";
 
-function Layout({ children }) {
-  const data = useSession();
+async function Layout({ children }) {
+  const data = await getServerSession();
+  let isSignedIn = null;
+
+  try {
+    const isConnected = await connectDB();
+    if (!isConnected) {
+      return notFound();
+    }
+
+    const user = await User.findOne({ email: data.user.email });
+    if (user) {
+      isSignedIn = true;
+    } else {
+      isSignedIn = false;
+    }
+  } catch (err) {
+    isSignedIn = false;
+  }
 
   return (
     <>
@@ -17,17 +34,12 @@ function Layout({ children }) {
           <Link href="/">صفحه اصلی</Link>
           <Link href="/buy-residential">آگهی ها</Link>
         </div>
-        {data.status === "loading" && (
-          <button disabled>
-            <TailSpin color="#304ffe" height={20} strokeWidth={5} />
-          </button>
-        )}
-        {data.status === "authenticated" && (
+        {isSignedIn === true && (
           <Link href="/dashboard">
             <FaUserAlt size="20px" />
           </Link>
         )}
-        {data.status === "unauthenticated" && (
+        {isSignedIn === false && (
           <Link href="/account/sign-in">
             <FaSignInAlt />
             <span>ورود</span>

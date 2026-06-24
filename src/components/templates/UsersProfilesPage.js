@@ -8,26 +8,30 @@ import styles from "./UsersProfilesPage.module.css";
 function UsersProfilesPage({ profiles }) {
   return (
     <div className={styles.container}>
-      {profiles.map((profile) => (
-        <div className={styles.card} key={profile._id}>
-          <Card profile={profile} />
-          <Link
-            href={`/dashboard/profiles/${profile._id}`}
-            className={styles.button}
-            style={{
-              borderColor: "var(--color-green)",
-              color: "var(--color-green)",
-            }}
-          >
-            ویرایش
-            <FaEdit />
-          </Link>
-          <button className={styles.button}>
-            حذف آگهی
-            <FaTrash />
-          </button>
-        </div>
-      ))}
+      {profiles.length ? (
+        profiles.map((profile) => (
+          <div className={styles.card} key={profile._id}>
+            <Card profile={profile} />
+            <Link
+              href={`/dashboard/profiles/${profile._id}`}
+              className={styles.button}
+              style={{
+                borderColor: "var(--color-green)",
+                color: "var(--color-green)",
+              }}
+            >
+              ویرایش
+              <FaEdit />
+            </Link>
+            <button className={styles.button}>
+              حذف آگهی
+              <FaTrash />
+            </button>
+          </div>
+        ))
+      ) : (
+        <div className={styles.noProfile}>هیچ آگهی ثبت نکردید</div>
+      )}
     </div>
   );
 }

@@ -29,3 +29,14 @@
 .button svg {
   margin-right: 5px;
 }
+
+.noProfile {
+  background-color: var(--color-light-red);
+  grid-column-start: 1;
+  grid-column-end: 4;
+  padding: 5px 15px;
+  border-radius: 8px;
+  color: var(--color-red);
+  font-size: 1.75rem;
+  font-weight: 500;
+}

@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 
 import AuthForms from "@/components/templates/AuthForms";
 
 function SignInPage() {
-  const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
   const [isFetching, setIsFetching] = useState(false);
 
@@ -30,7 +28,7 @@ function SignInPage() {
         toast.success("با موفقیت وارد حساب کاربری شدید", {
           id: loadingToastId,
         });
-        router.replace("/dashboard");
+        window.location.replace("/dashboard")
       } else {
         toast.error(res.error, { id: loadingToastId });
       }

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import User from "@/models/User";
 import connectDB from "@/utils/connectDB";
@@ -28,9 +28,12 @@ export default async function UserProfiles() {
         },
       },
     ]);
+    if (!user) {
+      return redirect("/account/sign-in");
+    }
 
     return <UsersProfilesPage profiles={user.profiles} />;
   } catch (err) {
-    return notFound();
+    return redirect("/account/sign-in");
   }
 }

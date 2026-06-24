@@ -46,7 +46,7 @@ function SignUpPage() {
           redirect: false,
         });
         if (response.ok) {
-          router.replace("/dashboard");
+          window.location.replace("/dashboard");
         } else {
           router.push("/account/sign-in");
         }

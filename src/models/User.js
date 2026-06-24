@@ -5,7 +5,15 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  password: String,
+  password: {
+    type: String,
+    minLength: 8,
+  },
+  role: {
+    type: String,
+    enum: ["USER", "ADMIN"],
+    default: "USER",
+  },
   createdAt: {
     type: Date,
     default: () => Date.now(),
