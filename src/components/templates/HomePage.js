@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaCity } from "react-icons/fa";
 import { FiCircle } from "react-icons/fi";
 
@@ -22,15 +23,20 @@ function HomePage({ profiles }) {
       </ul>
       <div className={styles.categoryCardContainer}>
         {Object.keys(categories).map((category) => (
-          <div key={category} className={styles.categoryCard}>
-            <Image
-              src={`/images/${category}.png`}
-              alt={category}
-              width={240}
-              height={144}
-            />
-            <p>{categories[category]}</p>
-          </div>
+          <Link
+            href={{ pathname: "/profiles", query: { category } }}
+            key={category}
+          >
+            <div className={styles.categoryCard}>
+              <Image
+                src={`/images/${category}.png`}
+                alt={category}
+                width={240}
+                height={144}
+              />
+              <p>{categories[category]}</p>
+            </div>
+          </Link>
         ))}
       </div>
       <p className={styles.headerText}>شهر های پر بازدید</p>

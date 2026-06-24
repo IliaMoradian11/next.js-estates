@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 
@@ -17,7 +18,21 @@ function DashboardLayoutComponent({ children, email, role }) {
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar}>
-        <FaRegUserCircle color="#304ffe" size={60} />
+        {role === "USER" && <FaRegUserCircle color="#304ffe" size={60} />}
+        {role === "ADMIN" && (
+          <>
+            <RiAdminFill
+              color="#304ffe"
+              size={80}
+              style={{
+                border: "5px solid #304ffe",
+                borderRadius: "50%",
+                padding: "10px",
+              }}
+            />
+            <span>Admin</span>
+          </>
+        )}
         <p>{email}</p>
         <ul>
           <li>
@@ -30,9 +45,14 @@ function DashboardLayoutComponent({ children, email, role }) {
             <Link href="/dashboard/profiles/add">ثبت آگهی</Link>
           </li>
           {role === "ADMIN" && (
+            <>
             <li>
               <Link href="/admin">در انتظار تایید</Link>
             </li>
+            <li>
+              <Link href="/admin/profiles">تمام آگهی ها</Link>
+            </li>
+            </>
           )}
           <li>
             <button onClick={signOutHandler}>

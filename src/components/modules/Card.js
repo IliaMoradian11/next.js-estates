@@ -16,7 +16,7 @@ function Card({ profile: { category, title, location, price, _id } }) {
         {location}
       </p>
       <p className={styles.price}>{sp(price)} تومان</p>
-      <Link href={`/buy-residential/${_id}`} className={styles.seeProfile}>
+      <Link href={`/profiles/${_id}`} className={styles.seeProfile}>
         مشاهده آگهی
         <HiArrowLeft />
       </Link>

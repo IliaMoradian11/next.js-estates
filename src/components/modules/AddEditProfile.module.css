@@ -25,12 +25,6 @@
   transition: all 0.3s;
 }
 
-.container form > button:hover {
+.container form > button[type="submit"]:hover {
   transform: scale(1.03);
-}
-
-.container form > button:disabled {
-  background-color: grey;
-  cursor: not-allowed;
-  transform: none !important;
 }

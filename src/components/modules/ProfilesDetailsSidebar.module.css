@@ -1,0 +1,66 @@
+.aside {
+  width: 200px;
+  margin-right: 40px;
+}
+
+.aside svg {
+  color: var(--color-blue);
+  margin-left: 5px;
+  font-size: 1.25rem;
+}
+
+.aside > div,
+.aside > button {
+  box-shadow: var(--box-shadow);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.aside > div {
+  flex-direction: column;
+}
+
+.aside > button {
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  color: grey;
+  font-weight: 500;
+  margin: 25px 0;
+  padding: 8px;
+}
+
+.aside .homeSvg {
+  font-size: 3.5rem;
+}
+
+.aside .realState {
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.aside .phone {
+  color: grey;
+  display: flex;
+  align-items: center;
+}
+
+.aside .bottom {
+  color: grey;
+}
+
+.aside .bottom div:nth-child(2) {
+  margin: 10px 0;
+}
+
+.aside .bottom div:nth-child(1),
+.aside .bottom div:nth-child(3) {
+  display: flex;
+  align-items: center;
+}

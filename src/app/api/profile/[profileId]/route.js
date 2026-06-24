@@ -79,10 +79,6 @@ export async function PUT(req, { params }) {
 export async function PATCH(req, { params }) {
   const { type } = await req.json();
 
-  if (type !== "publish") {
-    return;
-  }
-
   try {
     const isConnected = await connectDB();
     if (!isConnected) {
@@ -125,7 +121,16 @@ export async function PATCH(req, { params }) {
       );
     }
 
-    profile.isPublished = true;
+    if (type === "publish") {
+      profile.isPublished = true;
+    } else if (type === "unPublish") {
+      profile.isPublished = false;
+    } else {
+      return NextResponse.json(
+      { ok: false, error: "تغییر نکرد" },
+      { status: 422 },
+    );;
+    }
 
     await profile.save();
 

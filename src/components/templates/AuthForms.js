@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+import LoadingButton from "../modules/LoadingButton";
+
 import styles from "./AuthForms.module.css";
 
 function AuthForms({
@@ -14,7 +16,7 @@ function AuthForms({
   form,
   submitHandler,
   setForm,
-  isFetching
+  isFetching,
 }) {
   const changeHandler = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,7 +54,11 @@ function AuthForms({
             />
           </>
         )}
-        <button type="submit" disabled={isFetching}>{submitButtonText}</button>
+        {isFetching ? (
+          <LoadingButton />
+        ) : (
+          <button type="submit">{submitButtonText}</button>
+        )}
       </form>
       <p>
         {pText} <Link href={`/account/${linkHref}`}>{linkText}</Link>

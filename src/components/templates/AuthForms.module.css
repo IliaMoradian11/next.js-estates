@@ -54,14 +54,8 @@
   transition: all 0.3s;
 }
 
-.container button:hover {
+.container button[type="submit"]:hover {
   transform: scale(1.1);
-}
-
-.container button:disabled {
-  background-color: grey;
-  cursor: not-allowed;
-  transform: none !important;
 }
 
 .container p {

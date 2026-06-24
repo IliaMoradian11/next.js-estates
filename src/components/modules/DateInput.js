@@ -7,7 +7,9 @@ import persian_fa from "react-date-object/locales/persian_fa";
 function DateInput({ input: { required }, date, changeHandler }) {
   return (
     <div>
-      <label style={{display: "block", marginBottom: "5px", fontWeight: "500" }}>
+      <label
+        style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}
+      >
         تاریخ ساخت
         {required && (
           <span style={{ marginRight: "3px", color: "var(--color-red)" }}>
@@ -20,6 +22,8 @@ function DateInput({ input: { required }, date, changeHandler }) {
           border: "2px dashed var(--color-blue)",
           padding: "15px",
           fontSize: "1rem",
+          color: "grey",
+          textAlign: "center",
         }}
         calendar={persian}
         locale={persian_fa}

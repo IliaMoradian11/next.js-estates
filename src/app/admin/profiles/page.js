@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import Profile from "@/models/Profile";
 import connectDB from "@/utils/connectDB";
-import UsersProfilesPage from "@/components/templates/UsersProfilesPage";
+import AdminProfilesPage from "@/components/templates/AdminProfilesPage";
 
 export default async function UserProfiles() {
   const isConnected = await connectDB();
@@ -11,9 +11,9 @@ export default async function UserProfiles() {
   }
 
   try {
-    const profiles = await Profile.find();
+    const profiles = await Profile.find().lean();
 
-    return <UsersProfilesPage profiles={profiles} />;
+    return <AdminProfilesPage profiles={profiles} />;
   } catch (err) {
     return redirect("/account/sign-in");
   }

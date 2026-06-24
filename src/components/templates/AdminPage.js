@@ -5,7 +5,7 @@ import { useState } from "react";
 import Card from "../modules/Card";
 import DeleteButton from "../modules/DeleteButton";
 import EditButton from "../modules/EditButton";
-import PublishButton from "../modules/PublishButton";
+import PublishUnPublishButton from "../modules/PublishUnPublishButton";
 
 import styles from "./AdminPage.module.css";
 
@@ -18,9 +18,10 @@ function AdminPage({ profiles }) {
         profilesState.map((profile) => (
           <div className={styles.card} key={profile._id}>
             <Card profile={profile} />
-            <PublishButton
+            <PublishUnPublishButton
               profileId={profile._id}
               setProfilesState={setProfilesState}
+              type="publish"
             />
             <EditButton path="admin" profileId={profile._id} />
             <DeleteButton profileId={profile._id} />

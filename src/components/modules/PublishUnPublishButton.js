@@ -1,24 +1,28 @@
-import { MdPublish } from "react-icons/md";
+import { MdPublish, MdUnpublished } from "react-icons/md";
 import toast from "react-hot-toast";
 
 import styles from "./Button.module.css";
 
-function PublishButton({ profileId, setProfilesState }) {
-  const publishHandler = async () => {
+function PublishUnPublishButton({ profileId, setProfilesState, type }) {
+  const publishUnPublishHandler = async () => {
     const toastId = toast.loading("در حال ارسال اطلاعات ...");
 
     try {
       const res = await fetch(`/api/profile/${profileId}`, {
         method: "PATCH",
         body: JSON.stringify({
-          type: "publish",
+          type,
         }),
         headers: { "Content-Type": "applicaton/json" },
       });
       const json = await res.json();
       if (json.ok) {
         toast.success(json.message, { id: toastId });
-        setProfilesState(json.data);
+        if (setProfilesState) {
+          setProfilesState(json.data);
+        } else {
+          window.location.reload();
+        }
       } else {
         toast.error(json.error, { id: toastId });
       }
@@ -30,16 +34,26 @@ function PublishButton({ profileId, setProfilesState }) {
   return (
     <button
       className={styles.button}
-      onClick={publishHandler}
+      onClick={publishUnPublishHandler}
       style={{
         borderColor: "var(--color-blue)",
         color: "var(--color-blue)",
       }}
     >
-      انتشار
-      <MdPublish />
+      {type === "publish" && (
+        <>
+          انتشار
+          <MdPublish />
+        </>
+      )}
+      {type === "unPublish" && (
+        <>
+          عدم انتشار
+          <MdUnpublished />
+        </>
+      )}
     </button>
   );
 }
 
-export default PublishButton;
+export default PublishUnPublishButton;

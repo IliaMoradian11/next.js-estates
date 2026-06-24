@@ -6,6 +6,7 @@ import RadioInputs from "../modules/RadioInputs";
 import TextList from "../modules/TextList";
 import DefaultInput from "../modules/DefaultInput";
 import DateInput from "../modules/DateInput";
+import LoadingButton from "./LoadingButton";
 
 import styles from "./AddEditProfile.module.css";
 
@@ -99,9 +100,11 @@ function AddEditProfile({
               );
           }
         })}
-        <button type="submit" disabled={isFetching}>
-          ثبت آگهی
-        </button>
+        {isFetching ? (
+          <LoadingButton />
+        ) : (
+          <button type="submit">ثبت آگهی</button>
+        )}
       </form>
     </div>
   );

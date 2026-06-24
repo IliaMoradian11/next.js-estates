@@ -1,0 +1,8 @@
+.button {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: grey !important;
+  cursor: not-allowed;
+}

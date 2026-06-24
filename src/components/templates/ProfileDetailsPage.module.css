@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+}
+
+.container main {
+  width: calc(100% - 240px);
+}
+
+.container main h3 {
+  color: var(--color-blue);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.container main .location {
+  display: flex;
+  align-items: center;
+  color: grey;
+  margin: 10px 0 40px;
+}
+
+.container main .location svg {
+  margin-left: 5px;
+}
+
+.container main h5 {
+  color: var(--color-blue);
+  font-weight: 500;
+  border-bottom: 2px solid grey;
+  font-size: 1.25rem;
+  margin: 40px 0 10px;
+  padding-bottom: 10px;
+}
+
+.container main ul {
+  margin-right: 20px;
+}
+
+.container main ul li {
+  margin-bottom: 5px;
+}
+
+.container main ul li::marker {
+  color: var(--color-blue);
+}
