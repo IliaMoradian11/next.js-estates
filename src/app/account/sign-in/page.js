@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import SignInPage from "@/components/templates/SignInPage";
 
 export const metadata = {
-  title: "پروژه املاک | وارد حساب کاربری خود شوید",
+  title: "املاک | وارد حساب کاربری خود شوید",
 };
 
 export default async function SignIn() {

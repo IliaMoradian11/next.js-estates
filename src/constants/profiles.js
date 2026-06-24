@@ -20,6 +20,30 @@ export const forms = [
     required: false,
   },
   { label: "قوانین", type: "text-list", id: "rules", required: false },
+  {
+    label: "تگ title (برای SEO)",
+    type: "text",
+    id: "titleMetadata",
+    required: false,
+  },
+  {
+    label: "تگ description (برای SEO)",
+    type: "textarea",
+    id: "descriptionMetadata",
+    required: false,
+  },
+  {
+    label: "تگ keywords (برای SEO)",
+    type: "text-list",
+    id: "keyWordsMetadata",
+    required: false,
+  },
+  {
+    label: "تگ author (برای SEO)",
+    type: "textarea",
+    id: "authorMetadata",
+    required: false,
+  },
   { label: "تاریخ ساخت", type: "date", id: "constructionDate", required: true },
 ];
 
@@ -34,6 +58,10 @@ export const initialState = {
   constructionDate: new Date(),
   amenities: [],
   rules: [],
+  titleMetadata: "",
+  descriptionMetadata: "",
+  keyWordsMetadata: [],
+  authorMetadata: "",
 };
 
 export const modelProfilelKeys = [
@@ -47,6 +75,10 @@ export const modelProfilelKeys = [
   "amenities",
   "rules",
   "constructionDate",
+  "titleMetadata",
+  "descriptionMetadata",
+  "keyWordsMetadata",
+  "authorMetadata",
 ];
 
 export const categories = {

@@ -4,6 +4,10 @@ import connectDB from "@/utils/connectDB";
 import Profile from "@/models/Profile";
 import ProfilesPage from "@/components/templates/ProfilesPage";
 
+export const metadata = {
+  title: "املاک | آگهی ها",
+};
+
 export default async function Profiles(req) {
   try {
     const isConnected = await connectDB();

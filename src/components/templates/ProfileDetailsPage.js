@@ -7,7 +7,6 @@ import styles from "./ProfileDetailsPage.module.css";
 
 function ProfileDetailsPage({ profile }) {
   const { title, location, descriptions, amenities, rules } = profile;
-  console.log(profile)
   return (
     <div className={styles.container}>
       <main>

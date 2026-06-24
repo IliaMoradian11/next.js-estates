@@ -5,6 +5,10 @@ import { notFound, redirect } from "next/navigation";
 
 import DashboardLayoutComponent from "@/components/layout/DashboardLayout";
 
+export const metadata = {
+  title: "املاک | پنل ادمین",
+};
+
 export default async function DashboardLayout({ children }) {
   const data = await getServerSession();
 

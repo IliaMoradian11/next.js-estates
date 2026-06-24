@@ -40,6 +40,13 @@ const profileSchema = new Schema(
       type: [{ text: String, listId: String }],
       default: [],
     },
+    titleMetadata: String,
+    descriptionMetadata: String,
+    keyWordsMetadata: {
+      type: [{ text: String, listId: String }],
+      default: [],
+    },
+    authorMetadata: String,
     constructionDate: {
       type: Date,
       required: true,

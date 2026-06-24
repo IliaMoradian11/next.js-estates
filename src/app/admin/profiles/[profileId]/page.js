@@ -42,3 +42,14 @@ export default async function AdminEditProfile({ params: { profileId } }) {
     return notFound();
   }
 }
+
+export async function generateMetadata({ params }) {
+  await connectDB();
+  const profile = await Profile.findById(params.profileId).lean();
+  return {
+    title: `املاک | ${profile.titleMetadata || "مشاهده آگهی"}`,
+    description: profile.descriptionMetadata,
+    authors: { name: profile.authorMetadata },
+    keywords: profile.keyWordsMetadata.map(i => i.text)
+  };
+}
