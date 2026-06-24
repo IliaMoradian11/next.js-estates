@@ -32,7 +32,7 @@ async function Layout({ children }) {
       <header className={styles.header}>
         <div>
           <Link href="/">صفحه اصلی</Link>
-          <Link href="/buy-residential">آگهی ها</Link>
+          <Link href="/profiles">آگهی ها</Link>
         </div>
         {isSignedIn === true && (
           <Link href="/dashboard">

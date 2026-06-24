@@ -48,3 +48,10 @@ export const modelProfilelKeys = [
   "rules",
   "constructionDate",
 ];
+
+export const categories = {
+  villa: "خانه ویلایی",
+  apartment: "آپارتمان",
+  store: "مغازه",
+  office: "دفتر کار",
+};
