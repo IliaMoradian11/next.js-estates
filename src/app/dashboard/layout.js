@@ -4,7 +4,7 @@ import { checkIsSignedIn, getUserDatas } from "@/utils/api";
 import DashboardLayoutComponent from "@/components/layout/DashboardLayout";
 
 export const metadata = {
-  title: "املاک | داشبورد",
+  title: "املاک | پنل کاربری",
 };
 
 export default async function DashboardLayout({ children }) {

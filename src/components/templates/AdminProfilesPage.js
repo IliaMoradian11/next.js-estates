@@ -9,10 +9,16 @@ import PublishUnPublishButton from "../modules/PublishUnPublishButton";
 
 import styles from "./UsersProfilesPage.module.css";
 
-function AdminProfilesPage({ profiles }) {
+function AdminProfilesPage({
+  profiles,
+  noProfileText = "هیچ آگهی ثبت نکردید",
+  columnsCount = 3,
+}) {
   const [profilesState, setProfilesState] = useState(profiles);
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${columnsCount === 2 ? styles.columns2 : null}`}
+    >
       {profilesState.length ? (
         profilesState.map((profile) => (
           <div className={styles.card} key={profile._id}>
@@ -37,7 +43,7 @@ function AdminProfilesPage({ profiles }) {
           </div>
         ))
       ) : (
-        <div className={styles.noProfile}>هیچ آگهی ثبت نکردید</div>
+        <div className={styles.noProfile}>{noProfileText}</div>
       )}
     </div>
   );

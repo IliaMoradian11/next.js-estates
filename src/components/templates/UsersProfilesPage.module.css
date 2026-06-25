@@ -4,6 +4,10 @@
   gap: 50px;
 }
 
+.columns2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .card {
   border: 2px solid var(--color-blue);
   padding: 20px;

@@ -1,0 +1,51 @@
+.container h3 {
+  margin-bottom: 40px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-blue);
+}
+
+.container > div {
+  display: flex;
+}
+
+.container aside {
+  width: 250px;
+  margin-right: 40px;
+  box-shadow: var(--box-shadow);
+  padding: 15px;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.container aside p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.container aside p span {
+  font-weight: 500;
+  color: var(--color-blue);
+  margin-bottom: 10px;
+}
+
+.container aside button {
+  width: 100%;
+  margin-bottom: 20px;
+  border: none;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: white;
+}
+
+.container aside button:hover {
+  box-shadow: var(--box-shadow);
+}
+
+.container main {
+  width: calc(100% - 290px);
+  height: fit-content;
+}
