@@ -1,0 +1,48 @@
+.container h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+  color: var(--color-blue);
+}
+
+.container table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.container thead {
+  border-bottom: 2px solid var(--color-blue);
+  top: 50px;
+}
+
+.container th {
+  padding-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-blue);
+}
+
+.container tr {
+  border-bottom: 1px solid grey;
+}
+
+.container td {
+  padding: 10px;
+}
+
+.container td svg {
+  color: var(--color-blue);
+  font-size: 1.1rem;
+}
+
+.container tr td:last-child span {
+  color: var(--color-blue);
+  font-weight: 500;
+}
+
+.container tr td:last-child svg {
+  margin-left: 5px;
+  position: relative;
+  top: 4px;
+}

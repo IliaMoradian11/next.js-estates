@@ -45,7 +45,8 @@ export async function POST(req) {
       return notSignedIn();
     }
 
-    const isPublished = user.role === "ADMIN" ? true : false;
+    const isPublished =
+      user.role === "ADMIN" || user.role === "SUPER_USER" ? true : false;
 
     await Profile.create({ ...data, userId: user._id, isPublished });
 

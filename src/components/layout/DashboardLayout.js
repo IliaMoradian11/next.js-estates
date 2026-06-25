@@ -45,7 +45,7 @@ function DashboardLayoutComponent({ children, email, role }) {
           <li>
             <Link href="/dashboard/profiles/add">ثبت آگهی</Link>
           </li>
-          {role === "ADMIN" && (
+          {(role === "ADMIN" || role === "SUPER_USER") && (
             <>
               <li>
                 <Link href="/admin/profiles/pending">
@@ -63,6 +63,12 @@ function DashboardLayoutComponent({ children, email, role }) {
                 <Link href="/admin/profiles">
                   <MdSecurity />
                   تمام آگهی ها
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/users">
+                  <MdSecurity />
+                  کاربران
                 </Link>
               </li>
             </>

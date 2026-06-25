@@ -14,7 +14,9 @@ export default async function DashboardLayout({ children }) {
 
   const user = await getUserDatas(usersEmail);
   if (!user) return redirect("/");
-  if (user.role !== "ADMIN") redirect("/");
+  if (user.role !== "ADMIN") {
+    if (user.role !== "SUPER_USER") redirect("/");
+  }
 
   return (
     <DashboardLayoutComponent

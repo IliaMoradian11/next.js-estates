@@ -37,7 +37,7 @@ export async function PUT(req, { params }) {
     }
 
     if (user._id.toString() !== profile.userId.toString()) {
-      if (user.role !== "ADMIN") {
+      if (!(user.role === "ADMIN" || user.role === "SUPER_USER")) {
         return notAllowed_403("شما قادر به تغییر این آگهی نیستید");
       }
     }
@@ -74,7 +74,7 @@ export async function PATCH(req, { params }) {
       return notSignedIn();
     }
 
-    if (user.role !== "ADMIN") {
+    if (!(user.role === "ADMIN" || user.role === "SUPER_USER")) {
       return notAllowed_403("شما قادر به تغییر این آگهی نیستید");
     }
 
@@ -127,7 +127,7 @@ export async function DELETE(req, { params }) {
     const profile = await Profile.findById(params.profileId);
 
     if (user._id.toString() !== profile.userId.toString()) {
-      if (user.role !== "ADMIN") {
+      if (!(user.role === "ADMIN" || user.role === "SUPER_USER")) {
         return notAllowed_403("شما قادر به تغییر این آگهی نیستید");
       }
     }
