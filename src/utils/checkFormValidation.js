@@ -24,7 +24,12 @@ export function checkFormValidation(form, toast) {
     return false;
   }
 
-  if (form.price < 1000000) {
+  if (isNaN(+phone)) {
+    toast.error("شماره تلفن باید عدد باشد");
+    return false;
+  }
+
+  if (+form.price < 1000000) {
     toast.error("قیمت باید حتما بیشتر از 1 میلیون تومان باشد");
     return false;
   }

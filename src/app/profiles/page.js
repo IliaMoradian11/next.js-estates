@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import connectDB from "@/utils/connectDB";
 import Profile from "@/models/Profile";
@@ -11,9 +11,7 @@ export const metadata = {
 export default async function Profiles(req) {
   try {
     const isConnected = await connectDB();
-    if (!isConnected) {
-      return notFound();
-    }
+    if (!isConnected) redirect("/");
 
     const category = req.searchParams?.category;
     let searchInProfile = { isPublished: true };
@@ -26,6 +24,6 @@ export default async function Profiles(req) {
 
     return <ProfilesPage profiles={profiles} />;
   } catch (err) {
-    return notFound();
+    redirect("/");
   }
 }

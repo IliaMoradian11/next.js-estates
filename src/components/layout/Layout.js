@@ -1,6 +1,4 @@
-import { getServerSession } from "next-auth";
-import connectDB from "@/utils/connectDB";
-import User from "@/models/User";
+import { checkIsSignedIn } from "@/utils/api";
 
 import Link from "next/link";
 import { FaUserAlt, FaSignInAlt } from "react-icons/fa";
@@ -8,24 +6,7 @@ import { FaUserAlt, FaSignInAlt } from "react-icons/fa";
 import styles from "./Layout.module.css";
 
 async function Layout({ children }) {
-  const data = await getServerSession();
-  let isSignedIn = null;
-
-  try {
-    const isConnected = await connectDB();
-    if (!isConnected) {
-      return notFound();
-    }
-
-    const user = await User.findOne({ email: data.user.email });
-    if (user) {
-      isSignedIn = true;
-    } else {
-      isSignedIn = false;
-    }
-  } catch (err) {
-    isSignedIn = false;
-  }
+  const isSignedIn = await checkIsSignedIn();
 
   return (
     <>
@@ -34,12 +15,12 @@ async function Layout({ children }) {
           <Link href="/">صفحه اصلی</Link>
           <Link href="/profiles">آگهی ها</Link>
         </div>
-        {isSignedIn === true && (
+        {!!isSignedIn && (
           <Link href="/dashboard">
             <FaUserAlt size="20px" />
           </Link>
         )}
-        {isSignedIn === false && (
+        {!isSignedIn && (
           <Link href="/account/sign-in">
             <FaSignInAlt />
             <span>ورود</span>

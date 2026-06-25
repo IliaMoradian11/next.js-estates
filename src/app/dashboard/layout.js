@@ -1,8 +1,6 @@
-import { getServerSession } from "next-auth";
-import connectDB from "@/utils/connectDB";
-import User from "@/models/User";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
+import { checkIsSignedIn, getUserDatas } from "@/utils/api";
 import DashboardLayoutComponent from "@/components/layout/DashboardLayout";
 
 export const metadata = {
@@ -10,31 +8,18 @@ export const metadata = {
 };
 
 export default async function DashboardLayout({ children }) {
-  const data = await getServerSession();
+  const usersEmail = await checkIsSignedIn();
 
-  if (!data?.user?.email) {
-    return redirect("/account/sign-in");
-  }
+  if (!usersEmail) redirect("/");
 
-  try {
-    const isConnected = await connectDB();
-    if (!isConnected) {
-      return notFound();
-    }
+  const user = await getUserDatas(usersEmail);
+  if (!user) redirect("/");
 
-    const user = await User.findOne({ email: data.user.email });
-    if (!user) {
-      return redirect("/account/sign-in");
-    }
-
-    return (
-      <DashboardLayoutComponent
-        children={children}
-        email={user.email}
-        role={user.role}
-      />
-    );
-  } catch (err) {
-    return redirect("/account/sign-in");
-  }
+  return (
+    <DashboardLayoutComponent
+      children={children}
+      email={user.email}
+      role={user.role}
+    />
+  );
 }

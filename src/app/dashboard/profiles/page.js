@@ -1,9 +1,9 @@
-import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 
 import User from "@/models/User";
 import connectDB from "@/utils/connectDB";
 import UsersProfilesPage from "@/components/templates/UsersProfilesPage";
+import { checkIsSignedIn } from "@/utils/api";
 
 export const metadata = {
   title: "املاک | آگهی های من",
@@ -11,18 +11,13 @@ export const metadata = {
 
 export default async function UserProfiles() {
   const isConnected = await connectDB();
-  if (!isConnected) {
-    return notFound();
-  }
+  if (!isConnected) redirect("/");
 
   try {
-    const data = await getServerSession();
-    if (!data?.user?.email) {
-      return notFound();
-    }
+    const usersEmail = await checkIsSignedIn();
 
     const [user] = await User.aggregate([
-      { $match: { email: data.user.email } },
+      { $match: usersEmail },
       {
         $lookup: {
           from: "profiles",
@@ -32,12 +27,10 @@ export default async function UserProfiles() {
         },
       },
     ]);
-    if (!user) {
-      return redirect("/account/sign-in");
-    }
+    if (!user) redirect("/");
 
     return <UsersProfilesPage profiles={user.profiles} />;
   } catch (err) {
-    return redirect("/account/sign-in");
+    redirect("/");
   }
 }

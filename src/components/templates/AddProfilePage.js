@@ -23,6 +23,7 @@ function AddProfilePage() {
     try {
       const newAmenities = form.amenities.filter((i) => i.text);
       const newRules = form.rules.filter((i) => i.text);
+      const newKeyWordsMetadata = form.keyWordsMetadata.filter((i) => i.text);
 
       const res = await fetch("/api/profile", {
         method: "POST",
@@ -30,6 +31,8 @@ function AddProfilePage() {
           ...form,
           amenities: newAmenities,
           rules: newRules,
+          keyWordsMetadata: newKeyWordsMetadata,
+          phone: +form.phone,
         }),
         headers: { "Content-Type": "applicaton/json" },
       });

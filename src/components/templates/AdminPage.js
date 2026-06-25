@@ -9,7 +9,7 @@ import PublishUnPublishButton from "../modules/PublishUnPublishButton";
 
 import styles from "./AdminPage.module.css";
 
-function AdminPage({ profiles }) {
+function AdminPage({ profiles, type }) {
   const [profilesState, setProfilesState] = useState(profiles);
 
   return (
@@ -21,7 +21,7 @@ function AdminPage({ profiles }) {
             <PublishUnPublishButton
               profileId={profile._id}
               setProfilesState={setProfilesState}
-              type="publish"
+              type={type}
             />
             <EditButton path="admin" profileId={profile._id} />
             <DeleteButton profileId={profile._id} />

@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { checkIsSignedIn } from "@/utils/api";
 import { redirect } from "next/navigation";
 
 import SignUpPage from "@/components/templates/SignUpPage";
@@ -8,11 +8,9 @@ export const metadata = {
 };
 
 export default async function SignUp() {
-  const data = await getServerSession();
+  const usersEmail = await checkIsSignedIn();
 
-  if (data?.user?.email) {
-    return redirect("/dashboard");
-  }
+  if (usersEmail) redirect("/");
 
   return <SignUpPage />;
 }

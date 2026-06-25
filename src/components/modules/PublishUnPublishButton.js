@@ -3,7 +3,12 @@ import toast from "react-hot-toast";
 
 import styles from "./Button.module.css";
 
-function PublishUnPublishButton({ profileId, setProfilesState, type }) {
+function PublishUnPublishButton({
+  profileId,
+  type,
+  setProfilesState,
+  getAllAfterChange = false,
+}) {
   const publishUnPublishHandler = async () => {
     const toastId = toast.loading("در حال ارسال اطلاعات ...");
 
@@ -18,10 +23,12 @@ function PublishUnPublishButton({ profileId, setProfilesState, type }) {
       const json = await res.json();
       if (json.ok) {
         toast.success(json.message, { id: toastId });
-        if (setProfilesState) {
-          setProfilesState(json.data);
+        if (getAllAfterChange) {
+          const allProfiles = await fetch("/api/profile");
+          const allProfilesJson = await allProfiles.json();
+          setProfilesState(allProfilesJson.data);
         } else {
-          window.location.reload();
+          setProfilesState(json.data);
         }
       } else {
         toast.error(json.error, { id: toastId });

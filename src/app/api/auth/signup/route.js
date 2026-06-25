@@ -1,4 +1,9 @@
-import { NextResponse } from "next/server";
+import {
+  createdSuccessfully,
+  dbConnectionFaild,
+  internalServerError,
+  unProcessableEntity,
+} from "@/constants/responses";
 
 import connectDB from "@/utils/connectDB";
 import User from "@/models/User";
@@ -7,46 +12,27 @@ import { hashPassword } from "@/utils/auth";
 export async function POST(req) {
   const isConnected = await connectDB();
   if (!isConnected) {
-    return NextResponse.json(
-      { ok: false, error: "مشکلی در سرور پیش آمد" },
-      { status: 500 },
-    );
+    return dbConnectionFaild();
   }
 
   try {
     const { email, password } = await req.json();
     if (email?.length < 4 || password?.length < 8) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "ایمیل باید بیش از چهار و رمز عبور باید بیش از هشت حرف باشد",
-        },
-        { status: 422 },
+      return unProcessableEntity(
+        "ایمیل باید بیش از چهار و رمز عبور باید بیش از هشت حرف باشد",
       );
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "این ایمیل قبلا ثبت نام شده است",
-        },
-        { status: 422 },
-      );
+      return unProcessableEntity("این ایمیل قبلا ثبت نام شده است");
     }
 
     const hashedPassword = await hashPassword(password);
     await User.create({ email, password: hashedPassword });
 
-    return NextResponse.json(
-      { ok: true, message: "کاربر با موفقیت ایجاد شد" },
-      { status: 201 },
-    );
+    return createdSuccessfully("کاربر با موفقیت ایجاد شد");
   } catch (err) {
-    return NextResponse.json(
-      { ok: false, error: "مشکلی در سرور پیش آمد" },
-      { status: 500 },
-    );
+    return internalServerError();
   }
 }

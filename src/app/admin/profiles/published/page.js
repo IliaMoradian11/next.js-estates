@@ -7,14 +7,12 @@ import AdminPage from "@/components/templates/AdminPage";
 
 export default async function Admin() {
   const isConnected = await connectDB();
-  if (!isConnected) {
-    return redirect("/dashboard");
-  }
+  if (!isConnected) redirect("/");
 
   try {
-    const profiles = await Profile.find({ isPublished: false }).lean();
-    return <AdminPage profiles={JSON.parse(JSON.stringify(profiles))} />;
+    const profiles = await Profile.find({ isPublished: true }).lean();
+    return <AdminPage profiles={profiles} type="unPublish" />;
   } catch (err) {
-    return redirect("/dashboard");
+    redirect("/");
   }
 }

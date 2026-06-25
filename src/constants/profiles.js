@@ -2,7 +2,7 @@ export const forms = [
   { label: "عنوان آگهی", type: "text", id: "title", required: true },
   { label: "توضیحات", type: "textarea", id: "descriptions", required: true },
   { label: "آدرس", type: "text", id: "location", required: true },
-  { label: "شماره تماس", type: "number", id: "phone", required: true },
+  { label: "شماره تماس", type: "text", id: "phone", required: true },
   { label: "قیمت (تومان)", type: "number", id: "price", required: true },
   { label: "بنگاه", type: "text", id: "realState", required: true },
   {

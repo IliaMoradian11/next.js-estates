@@ -41,6 +41,12 @@
   font-weight: 500;
 }
 
+.container .sidebar li a svg {
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+}
+
 .container .sidebar li button {
   color: var(--color-red);
   cursor: pointer;

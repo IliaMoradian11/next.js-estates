@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { MdSecurity } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
@@ -46,12 +47,24 @@ function DashboardLayoutComponent({ children, email, role }) {
           </li>
           {role === "ADMIN" && (
             <>
-            <li>
-              <Link href="/admin">در انتظار تایید</Link>
-            </li>
-            <li>
-              <Link href="/admin/profiles">تمام آگهی ها</Link>
-            </li>
+              <li>
+                <Link href="/admin/profiles/pending">
+                  <MdSecurity />
+                  در انتظار تایید
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/profiles/published">
+                  <MdSecurity />
+                  تایید شده ها
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/profiles">
+                  <MdSecurity />
+                  تمام آگهی ها
+                </Link>
+              </li>
             </>
           )}
           <li>

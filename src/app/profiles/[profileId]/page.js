@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import connectDB from "@/utils/connectDB";
 import Profile from "@/models/Profile";
@@ -9,21 +9,13 @@ export const metadata = {
 };
 
 export default async function ProfileDetails(req) {
-  try {
-    const isConnected = await connectDB();
-    if (!isConnected) {
-      return notFound();
-    }
+  const isConnected = await connectDB();
+  if (!isConnected) redirect("/");
 
-    const profile = await Profile.findById(req.params.profileId).lean();
-    if (!profile) {
-      return notFound();
-    }
+  const profile = await Profile.findById(req.params.profileId).lean();
+  if (!profile) notFound();
 
-    return <ProfileDetailsPage profile={profile} />;
-  } catch (err) {
-    return notFound();
-  }
+  return <ProfileDetailsPage profile={profile} />;
 }
 
 export async function generateMetadata({ params }) {
@@ -33,6 +25,6 @@ export async function generateMetadata({ params }) {
     title: `املاک | ${profile.titleMetadata || "مشاهده آگهی"}`,
     description: profile.descriptionMetadata,
     authors: { name: profile.authorMetadata },
-    keywords: profile.keyWordsMetadata.map(i => i.text)
+    keywords: profile.keyWordsMetadata.map((i) => i.text),
   };
 }

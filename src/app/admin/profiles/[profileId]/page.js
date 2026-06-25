@@ -1,8 +1,6 @@
-import { notFound, redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
 
 import connectDB from "@/utils/connectDB";
-import User from "@/models/User";
 import Profile from "@/models/Profile";
 import { modelProfilelKeys } from "@/constants/profiles";
 
@@ -10,22 +8,11 @@ import EditProfilePage from "@/components/templates/EditProfilePage";
 
 export default async function AdminEditProfile({ params: { profileId } }) {
   const isConnected = await connectDB();
-  if (!isConnected) {
-    return notFound();
-  }
+  if (!isConnected) redirect("/");
 
   try {
-    const data = await getServerSession();
-    if (!data?.user?.email) {
-      return redirect("/account/sign-in");
-    }
-
-    const user = await User.findOne({ email: data.user.email }).lean();
-
     const profile = await Profile.findById(profileId).lean();
-    if (!profile) {
-      return notFound();
-    }
+    if (!profile) notFound();
 
     const initialState = {};
     for (const i of modelProfilelKeys) {
@@ -34,12 +21,12 @@ export default async function AdminEditProfile({ params: { profileId } }) {
 
     return (
       <EditProfilePage
-        initialState={JSON.parse(JSON.stringify(initialState))}
-        profileId={profile._id.toString()}
+        initialState={initialState}
+        profileId={profile._id}
       />
     );
   } catch (err) {
-    return notFound();
+    notFound();
   }
 }
 
@@ -50,6 +37,6 @@ export async function generateMetadata({ params }) {
     title: `املاک | ${profile.titleMetadata || "مشاهده آگهی"}`,
     description: profile.descriptionMetadata,
     authors: { name: profile.authorMetadata },
-    keywords: profile.keyWordsMetadata.map(i => i.text)
+    keywords: profile.keyWordsMetadata.map((i) => i.text),
   };
 }

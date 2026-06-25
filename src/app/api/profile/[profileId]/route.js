@@ -1,59 +1,44 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+import {
+  changedSuccessfully,
+  deletedSuccessfully,
+  internalServerError,
+  notAllowed_403,
+  notFound,
+  notSignedIn,
+  unProcessableEntity,
+} from "@/constants/responses";
 
 import connectDB from "@/utils/connectDB";
 import Profile from "@/models/Profile";
-import User from "@/models/User";
 import { modelProfilelKeys } from "@/constants/profiles";
+import { checkIsSignedIn, getUserDatas } from "@/utils/api";
 
 export async function PUT(req, { params }) {
   const data = await req.json();
+  const isConnected = await connectDB();
+  if (!isConnected) {
+    return internalServerError();
+  }
 
   try {
-    const isConnected = await connectDB();
-    if (!isConnected) {
-      return NextResponse.json(
-        { ok: false, error: "مشکلی در سرور پیش آمد" },
-        { status: 500 },
-      );
+    const usersEmail = await checkIsSignedIn();
+    if (!usersEmail) {
+      return notSignedIn();
     }
 
-    const session = await getServerSession();
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
-        { status: 401 },
-      );
-    }
-
-    const user = await User.findOne({ email: session.user.email });
+    const user = await getUserDatas(usersEmail);
     if (!user) {
-      return NextResponse.json(
-        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
-        { status: 401 },
-      );
+      return notSignedIn();
     }
 
     const profile = await Profile.findById(params.profileId);
     if (!profile) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "هیچ آگهی با این آیدی ثبت نشده است",
-        },
-        { status: 404 },
-      );
+      return notFound("هیچ آگهی با این آیدی ثبت نشده است");
     }
 
     if (user._id.toString() !== profile.userId.toString()) {
       if (user.role !== "ADMIN") {
-        return NextResponse.json(
-          {
-            ok: false,
-            error: "شما قادر به تغییر این آگهی نیستید",
-          },
-          { status: 403 },
-        );
+        return notAllowed_403("شما قادر به تغییر این آگهی نیستید");
       }
     }
 
@@ -61,64 +46,41 @@ export async function PUT(req, { params }) {
       profile[i] = data[i];
     }
 
+    profile.isPublished = false;
+
     await profile.save();
 
-    return NextResponse.json({
-      ok: true,
-      message: "با موفقیت تغییر کرد",
-      data: profile,
-    });
+    return changedSuccessfully(profile);
   } catch (err) {
-    return NextResponse.json(
-      { ok: false, error: "مشکلی در سرور پیش آمد" },
-      { status: 500 },
-    );
+    return internalServerError();
   }
 }
 
 export async function PATCH(req, { params }) {
   const { type } = await req.json();
+  const isConnected = await connectDB();
+  if (!isConnected) {
+    return internalServerError();
+  }
 
   try {
-    const isConnected = await connectDB();
-    if (!isConnected) {
-      return NextResponse.json(
-        { ok: false, error: "مشکلی در سرور پیش آمد" },
-        { status: 500 },
-      );
+    const usersEmail = await checkIsSignedIn();
+    if (!usersEmail) {
+      return notSignedIn();
     }
 
-    const session = await getServerSession();
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
-        { status: 401 },
-      );
-    }
-
-    const user = await User.findOne({ email: session.user.email });
+    const user = await getUserDatas(usersEmail);
     if (!user) {
-      return NextResponse.json(
-        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
-        { status: 401 },
-      );
+      return notSignedIn();
     }
+
     if (user.role !== "ADMIN") {
-      return NextResponse.json(
-        { ok: false, message: "فقط ادمین اجازه تغییر آگهی را دارد" },
-        { status: 403 },
-      );
+      return notAllowed_403("شما قادر به تغییر این آگهی نیستید");
     }
 
     const profile = await Profile.findById(params.profileId);
     if (!profile) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "هیچ آگهی با این آیدی ثبت نشده است",
-        },
-        { status: 404 },
-      );
+      return notFound("هیچ آگهی با این آیدی ثبت نشده است");
     }
 
     if (type === "publish") {
@@ -126,83 +88,55 @@ export async function PATCH(req, { params }) {
     } else if (type === "unPublish") {
       profile.isPublished = false;
     } else {
-      return NextResponse.json(
-      { ok: false, error: "تغییر نکرد" },
-      { status: 422 },
-    );;
+      return unProcessableEntity();
     }
 
     await profile.save();
 
-    const unPublishedProfiles = await Profile.find({
-      isPublished: false,
-    }).lean();
+    let otherProfiles;
 
-    return NextResponse.json({
-      ok: true,
-      message: "با موفقیت تغییر کرد",
-      data: unPublishedProfiles,
-    });
+    if (type === "publish") {
+      otherProfiles = await Profile.find({ isPublished: false });
+    } else {
+      otherProfiles = await Profile.find({ isPublished: true });
+    }
+
+    return changedSuccessfully(otherProfiles);
   } catch (err) {
-    console.log(err);
-    return NextResponse.json(
-      { ok: false, error: "مشکلی در سرور پیش آمد" },
-      { status: 500 },
-    );
+    return internalServerError();
   }
 }
 
 export async function DELETE(req, { params }) {
+  const isConnected = await connectDB();
+  if (!isConnected) {
+    return internalServerError();
+  }
+
   try {
-    const isConnected = await connectDB();
-    if (!isConnected) {
-      return NextResponse.json(
-        { ok: false, error: "مشکلی در سرور پیش آمد" },
-        { status: 500 },
-      );
+    const usersEmail = await checkIsSignedIn();
+    if (!usersEmail) {
+      return notSignedIn();
     }
 
-    const session = await getServerSession();
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
-        { status: 401 },
-      );
-    }
-
-    const user = await User.findOne({ email: session.user.email });
+    const user = await getUserDatas(usersEmail);
     if (!user) {
-      return NextResponse.json(
-        { ok: false, message: "ابتدا وارد حساب کاربری خود شوید" },
-        { status: 401 },
-      );
+      return notSignedIn();
     }
 
     const profile = await Profile.findById(params.profileId);
 
     if (user._id.toString() !== profile.userId.toString()) {
       if (user.role !== "ADMIN") {
-        return NextResponse.json(
-          {
-            ok: false,
-            message: "فقط ادمین یا سازنده آگهی اجازه تغییر آگهی را دارد",
-          },
-          { status: 403 },
-        );
+        return notAllowed_403("شما قادر به تغییر این آگهی نیستید");
       }
     }
 
     await Profile.findByIdAndDelete(params.profileId);
 
-    return NextResponse.json({
-      ok: true,
-      message: "حذف شد",
-    });
+    return deletedSuccessfully();
   } catch (err) {
     console.log(err);
-    return NextResponse.json(
-      { ok: false, error: "مشکلی در سرور پیش آمد" },
-      { status: 500 },
-    );
+    return internalServerError();
   }
 }
