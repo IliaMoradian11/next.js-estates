@@ -40,7 +40,7 @@ export const forms = [
   },
   {
     label: "تگ author (برای SEO)",
-    type: "textarea",
+    type: "text",
     id: "authorMetadata",
     required: false,
   },
