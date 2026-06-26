@@ -1,12 +1,18 @@
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import ProfilesDetailsSidebar from "../modules/ProfilesDetailsSidebar";
+"use client";
 
+import Link from "next/link";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+
+import ProfilesDetailsSidebar from "../modules/ProfilesDetailsSidebar";
+import EditButton from "../modules/EditButton";
+import DeleteButton from "../modules/DeleteButton";
+import PublishUnPublishButton from "../modules/PublishUnPublishButton";
 import { e2p } from "@/utils/replaceNumber";
 
 import styles from "./ProfileDetailsPage.module.css";
 
-async function ProfileDetailsPage({ profile }) {
-  const { title, location, descriptions, amenities, rules } = profile;
+function ProfileDetailsPage({ profile, isAdmin }) {
+  const { title, location, descriptions, amenities, rules, userId } = profile;
 
   return (
     <div className={styles.container}>
@@ -40,6 +46,33 @@ async function ProfileDetailsPage({ profile }) {
             )}
           </ul>
         </div>
+        {isAdmin && (
+          <div>
+            <h5>اختیارات ادمین</h5>
+            <PublishUnPublishButton
+              profileId={profile._id}
+              getProfilesAfterChange={false}
+              type="unPublish"
+            />
+            <EditButton profileId={profile._id} path="admin" />
+            <DeleteButton profileId={profile._id} />
+            <Link
+              href={`/admin/users/${userId}`}
+              style={{
+                width: "100%",
+                marginTop: "15px",
+                textAlign: "center",
+                padding: "5px",
+                border: "2px solid black",
+                display: "inline-block",
+                fontWeight: "500",
+                borderRadius: "5px",
+              }}
+            >
+              مشاهده سازنده آگهی
+            </Link>
+          </div>
+        )}
       </main>
       <ProfilesDetailsSidebar profile={profile} />
     </div>

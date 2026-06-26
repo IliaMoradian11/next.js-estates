@@ -32,6 +32,8 @@ function PublishUnPublishButton({
           } else {
             setProfilesState(json.data);
           }
+        } else {
+          window.location.reload();
         }
       } else {
         toast.error(json.error, { id: toastId });

@@ -20,24 +20,23 @@ function DashboardLayoutComponent({ children, email, role }) {
     <div className={styles.container}>
       <aside className={styles.sidebar}>
         {role === "USER" && <FaRegUserCircle color="#304ffe" size={60} />}
-        {role === "ADMIN" ||
-          (role === "SUPER_USER" && (
-            <>
-              <RiAdminFill
-                color="#304ffe"
-                size={80}
-                style={{
-                  border: "5px solid #304ffe",
-                  borderRadius: "50%",
-                  padding: "10px",
-                }}
-              />
-              <span>
-                {role === "ADMIN" && "Admin"}
-                {role === "SUPER_USER" && "Super User"}
-              </span>
-            </>
-          ))}
+        {(role === "ADMIN" || role === "SUPER_USER") && (
+          <>
+            <RiAdminFill
+              color="#304ffe"
+              size={80}
+              style={{
+                border: "5px solid #304ffe",
+                borderRadius: "50%",
+                padding: "10px",
+              }}
+            />
+            <span>
+              {role === "ADMIN" && "Admin"}
+              {role === "SUPER_USER" && "Super User"}
+            </span>
+          </>
+        )}
         <p>{email}</p>
         <ul>
           <li>

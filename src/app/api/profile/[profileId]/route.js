@@ -45,12 +45,12 @@ export async function PUT(req, { params }) {
       const changingProfileUser = await User.findById(profile.userId);
       if (changingProfileUser.role === "SUPER_USER") {
         return notAllowed_403(
-          "آگهی هایی که super user ثبت کرده قابل تغییر نیست",
+          "آگهی هایی که super user ثبت کرده قابل تغییر نیست"
         );
       } else if (changingProfileUser.role === "ADMIN") {
         if (user.role !== "SUPER_USER") {
           return notAllowed_403(
-            "برای تغییر آگهی هایی که ادمین ثبت کرده باید super user باشید",
+            "برای تغییر آگهی هایی که ادمین ثبت کرده باید super user باشید"
           );
         }
       }
@@ -101,12 +101,12 @@ export async function PATCH(req, { params }) {
       const changingProfileUser = await User.findById(profile.userId);
       if (changingProfileUser.role === "SUPER_USER") {
         return notAllowed_403(
-          "آگهی هایی که super user ثبت کرده قابل تغییر نیست",
+          "آگهی هایی که super user ثبت کرده قابل تغییر نیست"
         );
       } else if (changingProfileUser.role === "ADMIN") {
         if (user.role !== "SUPER_USER") {
           return notAllowed_403(
-            "برای تغییر آگهی هایی که ادمین ثبت کرده باید super user باشید",
+            "برای تغییر آگهی هایی که ادمین ثبت کرده باید super user باشید"
           );
         }
       }
@@ -163,12 +163,12 @@ export async function DELETE(req, { params }) {
       const changingProfileUser = await User.findById(profile.userId);
       if (changingProfileUser.role === "SUPER_USER") {
         return notAllowed_403(
-          "آگهی هایی که super user ثبت کرده قابل تغییر نیست",
+          "آگهی هایی که super user ثبت کرده قابل تغییر نیست"
         );
       } else if (changingProfileUser.role === "ADMIN") {
         if (user.role !== "SUPER_USER") {
           return notAllowed_403(
-            "برای تغییر آگهی هایی که ادمین ثبت کرده باید super user باشید",
+            "برای تغییر آگهی هایی که ادمین ثبت کرده باید super user باشید"
           );
         }
       }
