@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.container label {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.container select {
+  padding: 3px 12px;
+  font-size: 1rem;
+  border: 2px dashed var(--color-blue);
+  border-radius: 5px;
+  width: 275px;
+  color: grey;
+}
+
+.container select:focus {
+  outline: none;
+}

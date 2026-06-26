@@ -5,8 +5,9 @@ import { e2p } from "@/utils/replaceNumber";
 
 import styles from "./ProfileDetailsPage.module.css";
 
-function ProfileDetailsPage({ profile }) {
+async function ProfileDetailsPage({ profile }) {
   const { title, location, descriptions, amenities, rules } = profile;
+
   return (
     <div className={styles.container}>
       <main>

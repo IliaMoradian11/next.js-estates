@@ -4,10 +4,6 @@ import connectDB from "@/utils/connectDB";
 import Profile from "@/models/Profile";
 import ProfileDetailsPage from "../../../components/templates/ProfileDetailsPage";
 
-export const metadata = {
-  title: "املاک | مشاهده آگهی",
-};
-
 export default async function ProfileDetails(req) {
   const isConnected = await connectDB();
   if (!isConnected) redirect("/");
@@ -15,7 +11,7 @@ export default async function ProfileDetails(req) {
   const profile = await Profile.findById(req.params.profileId).lean();
   if (!profile) notFound();
 
-  return <ProfileDetailsPage profile={profile} />;
+  return <ProfileDetailsPage profile={JSON.parse(JSON.stringify(profile))} />;
 }
 
 export async function generateMetadata({ params }) {

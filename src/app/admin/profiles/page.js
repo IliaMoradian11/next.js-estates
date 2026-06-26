@@ -11,7 +11,9 @@ export default async function UserProfiles() {
   try {
     const profiles = await Profile.find().lean();
 
-    return <AdminProfilesPage profiles={profiles} />;
+    return (
+      <AdminProfilesPage profiles={JSON.parse(JSON.stringify(profiles))} />
+    );
   } catch (err) {
     redirect("/");
   }

@@ -8,6 +8,7 @@ function PublishUnPublishButton({
   type,
   setProfilesState,
   getAllAfterChange = false,
+  getProfilesAfterChange = true,
 }) {
   const publishUnPublishHandler = async () => {
     const toastId = toast.loading("در حال ارسال اطلاعات ...");
@@ -23,12 +24,14 @@ function PublishUnPublishButton({
       const json = await res.json();
       if (json.ok) {
         toast.success(json.message, { id: toastId });
-        if (getAllAfterChange) {
-          const allProfiles = await fetch("/api/profile");
-          const allProfilesJson = await allProfiles.json();
-          setProfilesState(allProfilesJson.data);
-        } else {
-          setProfilesState(json.data);
+        if (getProfilesAfterChange) {
+          if (getAllAfterChange) {
+            const allProfiles = await fetch("/api/profile");
+            const allProfilesJson = await allProfiles.json();
+            setProfilesState(allProfilesJson.data);
+          } else {
+            setProfilesState(json.data);
+          }
         }
       } else {
         toast.error(json.error, { id: toastId });

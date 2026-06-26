@@ -3,7 +3,7 @@ import { FiFilter } from "react-icons/fi";
 
 import { categories } from "@/constants/profiles";
 
-import styles from "./ProfilesSidebar.module.css"
+import styles from "./ProfilesSidebar.module.css";
 
 function ProfilesSidebar() {
   return (

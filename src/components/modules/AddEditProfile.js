@@ -6,6 +6,7 @@ import RadioInputs from "../modules/RadioInputs";
 import TextList from "../modules/TextList";
 import DefaultInput from "../modules/DefaultInput";
 import DateInput from "../modules/DateInput";
+import SelectOption from "./SelectOption";
 import LoadingButton from "./LoadingButton";
 
 import styles from "./AddEditProfile.module.css";
@@ -17,6 +18,7 @@ function AddEditProfile({
   setForm,
   isFetching,
 }) {
+  console.log(form);
   const addForm = (name) => {
     setForm({ ...form, [name]: [...form[name], { text: "", listId: v7() }] });
   };
@@ -86,7 +88,16 @@ function AddEditProfile({
                   input={input}
                   date={form.constructionDate}
                   changeHandler={dateChangeHandler}
-                  key={v7()}
+                  key={input.id}
+                />
+              );
+            case "select-option":
+              return (
+                <SelectOption
+                  input={input}
+                  value={form.city}
+                  key={input.id}
+                  changeHandler={textChangeHandler}
                 />
               );
             default:
