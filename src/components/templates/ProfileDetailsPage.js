@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { MdPersonOutline } from "react-icons/md";
 
 import ProfilesDetailsSidebar from "../modules/ProfilesDetailsSidebar";
 import EditButton from "../modules/EditButton";
@@ -56,20 +57,9 @@ function ProfileDetailsPage({ profile, isAdmin }) {
             />
             <EditButton profileId={profile._id} path="admin" />
             <DeleteButton profileId={profile._id} />
-            <Link
-              href={`/admin/users/${userId}`}
-              style={{
-                width: "100%",
-                marginTop: "15px",
-                textAlign: "center",
-                padding: "5px",
-                border: "2px solid black",
-                display: "inline-block",
-                fontWeight: "500",
-                borderRadius: "5px",
-              }}
-            >
+            <Link href={`/admin/users/${userId}`} className={styles.seeUser}>
               مشاهده سازنده آگهی
+              <MdPersonOutline />
             </Link>
           </div>
         )}

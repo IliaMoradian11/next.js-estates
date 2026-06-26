@@ -40,7 +40,7 @@ function DashboardLayoutComponent({ children, email, role }) {
         <p>{email}</p>
         <ul>
           <li>
-            <Link href="/">حساب کاربری</Link>
+            <Link href="/dashboard">حساب کاربری</Link>
           </li>
           <li>
             <Link href="/dashboard/profiles">آگهی های من</Link>

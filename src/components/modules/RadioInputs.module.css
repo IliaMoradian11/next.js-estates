@@ -11,10 +11,12 @@
 
 .container div {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .container button {
   margin-left: 30px;
+  margin-bottom: 30px;
   display: flex;
   align-items: center;
   width: fit-content;

@@ -43,3 +43,30 @@
 .container main ul li::marker {
   color: var(--color-blue);
 }
+
+.seeUser {
+  width: 100%;
+  margin-top: 15px;
+  padding: 5px;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.seeUser svg {
+  margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .container main {
+    width: 100%;
+    margin-bottom: 50px;
+  }
+}

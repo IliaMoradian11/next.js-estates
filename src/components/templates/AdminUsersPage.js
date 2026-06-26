@@ -3,6 +3,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { HiInformationCircle } from "react-icons/hi";
 import { RiAdminFill } from "react-icons/ri";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { v7 } from "uuid";
 
 import styles from "./AdminUsersPage.module.css";
 
@@ -22,7 +23,7 @@ function AdminUsersPage({ users }) {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr>
+            <tr key={v7()}>
               <td>
                 {user.role === "USER" && <FaRegUserCircle />}
                 {user.role === "ADMIN" && (

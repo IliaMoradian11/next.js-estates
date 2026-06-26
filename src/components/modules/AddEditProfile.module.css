@@ -28,3 +28,10 @@
 .container form > button[type="submit"]:hover {
   transform: scale(1.03);
 }
+
+@media (max-width: 425px) {
+  .container input,
+  .container textarea {
+    width: 100% !important;
+  }
+}

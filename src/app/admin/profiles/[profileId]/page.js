@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import connectDB from "@/utils/connectDB";
 import Profile from "@/models/Profile";
 import { modelProfilelKeys } from "@/constants/profiles";
+import buildMetadata from "@/utils/buildMetadata";
 
 import EditProfilePage from "@/components/templates/EditProfilePage";
 
@@ -20,10 +21,7 @@ export default async function AdminEditProfile({ params: { profileId } }) {
     }
 
     return (
-      <EditProfilePage
-        initialState={initialState}
-        profileId={profile._id}
-      />
+      <EditProfilePage initialState={initialState} profileId={profile._id} />
     );
   } catch (err) {
     notFound();
@@ -33,10 +31,5 @@ export default async function AdminEditProfile({ params: { profileId } }) {
 export async function generateMetadata({ params }) {
   await connectDB();
   const profile = await Profile.findById(params.profileId).lean();
-  return {
-    title: `املاک | ${profile.titleMetadata || "مشاهده آگهی"}`,
-    description: profile.descriptionMetadata,
-    authors: { name: profile.authorMetadata },
-    keywords: profile.keyWordsMetadata.map((i) => i.text),
-  };
+  return buildMetadata(profile, "مشاهده آگهی");
 }

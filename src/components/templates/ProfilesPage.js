@@ -10,7 +10,7 @@ function ProfilesPage({ profiles }) {
       <main>
         {profiles.length ? (
           profiles.map((profile) => (
-            <div className={styles.card}>
+            <div className={styles.card} key={profile._id}>
               <Card profile={profile} />
             </div>
           ))

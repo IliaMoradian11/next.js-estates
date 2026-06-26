@@ -49,3 +49,22 @@
   width: calc(100% - 290px);
   height: fit-content;
 }
+
+@media (max-width: 1024px) {
+  .container > div {
+    flex-direction: column-reverse;
+  }
+
+  .container aside,
+  .container main {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container h3 {
+    font-size: 1.5rem;
+  }
+}

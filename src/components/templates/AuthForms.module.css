@@ -69,3 +69,9 @@
   padding-bottom: 2px;
   border-bottom: 3px solid grey;
 }
+
+@media (max-width: 425px) {
+  .container {
+    padding-top: 0;
+  }
+}

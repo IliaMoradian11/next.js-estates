@@ -33,3 +33,9 @@
 .aside div svg {
   margin-left: 5px;
 }
+
+@media (max-width: 720px) {
+  .aside {
+    width: 100%;
+  }
+}

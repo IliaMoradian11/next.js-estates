@@ -27,3 +27,26 @@
   font-weight: 500;
   height: fit-content;
 }
+
+@media (max-width: 1000px) {
+  .container main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .container main {
+    width: 100%;
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 475px) {
+  .container main {
+    grid-template-columns: 1fr;
+  }
+}

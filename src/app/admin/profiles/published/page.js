@@ -11,7 +11,12 @@ export default async function Admin() {
 
   try {
     const profiles = await Profile.find({ isPublished: true }).lean();
-    return <AdminPage profiles={profiles} type="unPublish" />;
+    return (
+      <AdminPage
+        profiles={JSON.parse(JSON.stringify(profiles))}
+        type="unPublish"
+      />
+    );
   } catch (err) {
     redirect("/");
   }

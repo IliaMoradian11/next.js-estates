@@ -29,7 +29,9 @@ export default async function UserProfiles() {
     ]);
     if (!user) redirect("/");
 
-    return <UsersProfilesPage profiles={user.profiles} />;
+    return (
+      <UsersProfilesPage profiles={JSON.parse(JSON.stringify(user.profiles))} />
+    );
   } catch (err) {
     redirect("/");
   }
